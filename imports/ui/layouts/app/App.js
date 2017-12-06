@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
- 
+import { Books } from '/imports/api/books/books'; 
 import Task from '../../components/task/Task.js';
+import { withTracker } from 'meteor/react-meteor-data';
  
 // App component - represents the whole app
-export default class App extends Component {
+class App extends Component {
   getTasks() {
     return [
       { _id: 1, text: 'This is task 1' },
@@ -13,7 +14,7 @@ export default class App extends Component {
   }
  
   renderTasks() {
-    return this.getTasks().map((task) => (
+    return this.props.books.map((task) => (
       <Task key={task._id} task={task} />
     ));
   }
@@ -32,3 +33,11 @@ export default class App extends Component {
     );
   }
 }
+
+export default AppContainer = withTracker(()=>{
+  Books.subscribe('Books.all')
+  return{
+    books: Books.find()
+  }
+
+})(App)
