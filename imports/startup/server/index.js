@@ -1,12 +1,12 @@
 // Import server startup through a single index entry point
 import { Meteor } from 'meteor/meteor';
-import Books from "/imports/api/books/Books"
+import { Books } from "../../api/books/books"
 
 import './fixtures.js';
 import './register-api.js';
 
 Meteor.startup(() => {
-  if (Books.find().count === 0) {
+  if (Books.find().count() === 0) {
     Books.insert(
       [{
         "image": "",

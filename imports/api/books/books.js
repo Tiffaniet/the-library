@@ -1,6 +1,6 @@
 import { Mongo } from 'meteor/mongo';
 
-export default Books = new Mongo.Collection("Books");
+export const Books = new Mongo.Collection("Books");
 
 Books.deny({
   insert() { return true; },
