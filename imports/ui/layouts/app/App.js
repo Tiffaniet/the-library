@@ -34,10 +34,9 @@ class App extends Component {
   }
 }
 
-export default AppContainer = withTracker(()=>{
-  Books.subscribe('Books.all')
+export default AppContainer = withTracker(() => {
+  Books.subscribe('Books.all');
   return{
     books: Books.find()
   }
-
 })(App)
