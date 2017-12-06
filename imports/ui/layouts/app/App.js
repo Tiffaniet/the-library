@@ -14,6 +14,7 @@ class App extends Component {
   }
  
   renderTasks() {
+    console.log(this.props)
     return this.props.books.map((task) => (
       <Task key={task._id} task={task} />
     ));
@@ -35,7 +36,7 @@ class App extends Component {
 }
 
 export default AppContainer = withTracker(() => {
-  Books.subscribe('Books.all');
+  Meteor.subscribe('Books.all');
   return{
     books: Books.find()
   }

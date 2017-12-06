@@ -7,8 +7,8 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
  
-import App from '../imports/ui/layouts/app/App.js';
+import AppContainer from '../imports/ui/layouts/app/App.js';
  
 Meteor.startup(() => {
-  render(<App />, document.getElementById('library'));
+  render(<AppContainer />, document.getElementById('library'));
 });
