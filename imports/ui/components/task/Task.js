@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 export default class Task extends Component {
   render() {
     return (
-      <li>{this.props.book.bookname}</li>
+       <li><img src={this.props.book.image}/> {this.props.book.bookname}</li>
     );
   }
 }
