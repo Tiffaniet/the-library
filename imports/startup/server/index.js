@@ -5,10 +5,7 @@ import { Books } from "../../api/books/books"
 import './fixtures.js';
 import './register-api.js';
 
-Meteor.startup(() => {
-  if (Books.find().count() === 0) {
-    Books.insert(
-      [{
+const books = [{
         "image": "",
         "bookname": "Hunger Games : La Révolte",
         "author": "Suzanne Collins",
@@ -44,7 +41,6 @@ Meteor.startup(() => {
         "date": "05/01/2017",
         "description": "Une histoire d’amour profondément émouvante et complètement envoutante dans un univers effrayant de monstres et de fantomes… Un cocktail aussi surprenant que captivant ! Simon Snow déteste cette rentrée. Sa petite amie rompt avec lui ; son professeur préféré l’évite ; et Baz, son insupportable colocataire et ennemi juré, a disparu. Qu’il se trouve à l’école de magie de Watford ne change pas grand-chose. Simon n’a rien, mais vraiment rien de l’Élu. Et pourtant, il faut avancer, car la vie continue…"
       }, {
-        "id": 6,
         "image": "",
         "bookname": "Intégrale Le labyrinthetashia",
         "author": "James Dashner",
@@ -94,6 +90,11 @@ Meteor.startup(() => {
         "date": "20/01/2005",
         "description": "Troie n’est plus qu’un champ de ruines. Vainqueurs, les Grecs vont enfin pouvoir rentrer dans leur patrie. Parmi eux Ulysse, roi d’Ithaque : avec ses compagnons, il s’embarque pour une fabuleuse odysée qui le mènera de Charybde en Scylla. Mais bien vite, sur les flots déchaînés par la colère de Poséidon, il devient un simple fétu de paille, balloté entre la caverne du Cyclope et le pays de l’envoûtante Circé."
       }]
-    )
+
+Meteor.startup(() => {
+  if (Books.find().count() === 0) {
+    books.map(( book ) => {
+      Books.insert( book )
+    })
   }
 })
