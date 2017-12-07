@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Books } from '/imports/api/books/books'; 
+import { Meteor } from 'meteor/meteor';
 import Task from '../../components/task/Task.js';
 import { withTracker } from 'meteor/react-meteor-data';
- 
+import { Books } from '/imports/api/books/books';
+
 // App component - represents the whole app
 class App extends Component {
   getTasks() {
@@ -14,9 +15,9 @@ class App extends Component {
   }
  
   renderTasks() {
-    console.log(this.props)
-    return this.props.books.map((task) => (
-      <Task key={task._id} task={task} />
+    console.log(this.props.books)
+    return this.props.books.map((book) => (
+      <Task key={book._id} book={book} />
     ));
   }
  
@@ -36,8 +37,8 @@ class App extends Component {
 }
 
 export default AppContainer = withTracker(() => {
-  Meteor.subscribe('Books.all');
+  Meteor.subscribe('AllBooks');
   return{
-    books: Books.find()
+    books: Books.find().fetch(), 
   }
 })(App)
