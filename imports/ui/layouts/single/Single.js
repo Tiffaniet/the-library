@@ -9,9 +9,19 @@ class Single extends Component {
   render() {
   	console.log(this.props)
   	return (
-	    <div>
-        <p>{this.props.livre.bookname}</p>
-        <h1>Single page</h1>
+	    <div className="single">
+	    	<div>
+	    		<img src={this.props.livre.image}/>
+	    	</div>
+	        <div className="single__desc">
+	        	<div>
+		        	<span className="entry__cat">{this.props.livre.category}</span>
+		        	<span>{this.props.livre.date}</span>
+	        	</div>
+	        	<p>{this.props.livre.bookname}</p>
+	        	<p>{this.props.livre.author}</p>
+	        	<p>{this.props.livre.description}</p>
+	        </div>
 	    </div>
 	);
   }
