@@ -28,9 +28,10 @@ class Single extends Component {
 }
 
 export default SingleContainer = withTracker((props) => {
-  // Meteor.subscribe('singlebook');
   Meteor.subscribe('AllBooks');
+  console.log(Meteor.call('tasks.showOne', props.match.params.id )); 
   return{
-    livre: Books.findOne({ _id: props.match.params.id })
+    // livre: Books.findOne({ _id: props.match.params.id })
+    livre: Meteor.call('tasks.showOne', props.match.params.id )
   }
 })(Single)
