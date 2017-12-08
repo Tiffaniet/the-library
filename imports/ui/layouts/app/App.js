@@ -21,12 +21,12 @@ class App extends Component {
   render() {
     return (
       <div className="container" ref="container">
-        <header class="header">
+        <header className="header">
           <h3><small>Tous les livres</small></h3>
           <h2>Tous les livres parus</h2>
         </header>
-        <section class="section__medium">
-          <ul class="entry__list">
+        <section className="section__medium">
+          <ul className="entry__list">
             {this.renderTasks()}
           </ul>
         </section>  
