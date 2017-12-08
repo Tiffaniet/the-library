@@ -1,0 +1,54 @@
+@maincolor :#273157;
+@grey: #A9ADBC;
+@light-green: #DFF9F3;
+@dark-green: #88C9B9;
+.header{
+	padding-left: 50px;
+	h2{
+		color: @maincolor;
+	}
+	h3{
+		color: @grey;
+	}
+}
+.entry{
+	&__list{
+		display: inline-block;
+		padding: 0;
+		text-align: center;
+	}
+	&__link{
+		display: inline-block;
+		width: 12%;
+		margin-right: 50px;
+		vertical-align: top;
+		text-align: left;
+		&:nth-child(6n){
+			margin-right: 0;
+		}
+		img{
+			width: 150px;
+		}
+		a{
+			text-decoration: none;
+		}
+	}
+	&__desc{
+		max-width: 150px;
+		text-align: left;
+		margin-bottom: 50px;
+	}
+	&__name{
+		color: @maincolor;
+	}
+	&__author{
+		color: @grey;
+	}
+	&__cat{
+		width: fit-content;
+		color: @dark-green;
+		background-color: @light-green;
+		padding: 5px 10px;
+		border-radius: 50px;
+	}
+}
