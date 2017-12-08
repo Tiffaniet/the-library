@@ -5,12 +5,19 @@ import { withTracker } from 'meteor/react-meteor-data';
 import { Books } from '/imports/api/books/books';
 
 class Single extends Component {
+	constructor() {
+		super();
+	}
+
+	click(event) {
+		console.log(event)
+		// const el = ReactDOM.findDOMNode()
+	}
 
   render() {
-  	console.log(this.props)
   	return (
-	    <div className="single">
-	    	<div>
+	    <div className="single" onClick={this.click.bind(null, event)}>
+	    	<div className="imageContainer">
 	    		<img src={this.props.livre.image}/>
 	    	</div>
 	        <div className="single__desc">
@@ -28,10 +35,10 @@ class Single extends Component {
 }
 
 export default SingleContainer = withTracker((props) => {
-  Meteor.subscribe('AllBooks');
-  console.log(Meteor.call('tasks.showOne', props.match.params.id )); 
+  Meteor.subscribe('theBook',props.match.params.id );
+	const livre =  (Books.find(props.match.params.id).fetch())[0]
+
   return{
-    // livre: Books.findOne({ _id: props.match.params.id })
-    livre: Meteor.call('tasks.showOne', props.match.params.id )
+		livre
   }
 })(Single)

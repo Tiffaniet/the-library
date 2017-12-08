@@ -1,9 +1,16 @@
 .single {
     display: flex;
     flex-direction: row;
-
+    .imageContainer, .single__desc {
+      width: 50%;
+    }
+    .imageContainer {
+      background: black;
+    }
     img {
       height: 100%;
+      display: block;
+      margin: auto;
     }
     .single__desc {
       padding: 1rem;
