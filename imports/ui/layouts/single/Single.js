@@ -4,14 +4,21 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Books } from '/imports/api/books/books';
 
-export default class Single extends Component {
+class Single extends Component {
+
   render() {
-    return (
-      <div >
-        <img src={this.props.singlebook.image}/>
-        <p>this.props.singlebook.bookname</p>
-      </div>
-    );
+  	console.log(this.props.livre)
+  	return (
+	    <div>
+	       {this.props.livre.author}
+	    </div>
+	);
   }
 }
 
+export default SingleContainer = withTracker((props) => {
+  Meteor.subscribe('singlebook');
+  return{
+    livre: Books.findOne({ _id: props.match.params.id })
+  }
+})(Single)
