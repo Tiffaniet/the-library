@@ -19,10 +19,25 @@ html,body{
 	}
 	&__link{
 		display: inline-block;
-		width: 12%;
-		margin-right: 50px;
+		width: 50%;
 		vertical-align: top;
 		text-align: left;
+		margin-bottom: 50px;
+    	margin-right: 0;
+		@media (min-width: @tablet-small){
+			width: 25%;
+			margin-bottom: 0;
+    		margin-right: 50px;
+    		&:nth-child(3n){
+				margin-right: 0;
+			}
+		}
+		@media (min-width: @desktop-small){
+			width: 12%;
+			&:nth-child(3n){
+				margin-right: 50px;
+			}
+		}
 		&:nth-child(6n){
 			margin-right: 0;
 		}
@@ -40,6 +55,7 @@ html,body{
 	}
 	&__name{
 		color: @maincolor;
+		font-size: 15px;
 	}
 	&__author{
 		color: @grey;
@@ -50,5 +66,7 @@ html,body{
 		background-color: @light-green;
 		padding: 5px 10px;
 		border-radius: 50px;
+		text-transform: uppercase;
+		font-size: 12px;
 	}
 }
