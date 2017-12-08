@@ -10,7 +10,7 @@ class Single extends Component {
   	console.log(this.props.livre)
   	return (
 	    <div>
-	       {this.props.livre.author}
+	       <p>{this.props.livre.author}</p>
 	    </div>
 	);
   }
