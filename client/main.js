@@ -6,9 +6,9 @@
 import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
- 
-import AppContainer from '../imports/ui/layouts/app/App.js';
+import { renderRoutes } from '/imports/ui/layouts/renderRoutes/RenderRoutes'
  
 Meteor.startup(() => {
-  render(<AppContainer />, document.getElementById('library'));
+  render(renderRoutes(), document.getElementById('library')
+  );
 });
