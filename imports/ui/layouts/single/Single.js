@@ -9,14 +9,25 @@ class Single extends Component {
 		super();
 	}
 
-	click(event) {
-		console.log(event)
+  componentDidMount () {
+    // Detects clicks everywhere on the screen
+    document.addEventListener('dblclick', this.handleClick)
+  }
+
+  componentWillUnmount () {
+    document.removeEventListener('dblclick', this.handleClick)
+  }
+
+	handleClick(e) {
+		const value = e.target ;
+		console.log(value)
+		console.dir(value)
 		// const el = ReactDOM.findDOMNode()
 	}
 
   render() {
   	return (
-	    <div className="single" onClick={this.click.bind(null, event)}>
+	    <div className="single">
 	    	<div className="imageContainer">
 	    		<img src={this.props.livre.image}/>
 	    	</div>

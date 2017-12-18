@@ -1,8 +1,8 @@
 .single {
     display: flex;
-    flex-direction: row;
+    flex-flow: column nowrap;
     .imageContainer, .single__desc {
-      width: 50%;
+      height: 50vh;
     }
     .imageContainer {
       background: black;
@@ -13,6 +13,9 @@
       margin: auto;
     }
     .single__desc {
-      padding: 1rem;
+      padding: 0 1rem;
+      div {
+        padding-top: 2rem;
+      }
     }
 }
