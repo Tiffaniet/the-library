@@ -19,10 +19,17 @@ class Single extends Component {
   }
 
 	handleClick(e) {
-		const value = e.target ;
-		console.log(value)
-		console.dir(value)
-		// const el = ReactDOM.findDOMNode()
+		const target = e.target
+		const input = document.createElement("TEXTAREA")
+		const allowedType = ["P","SPAN"]
+		allowedType.map((el) => {
+			if(el == target.nodeName) {
+				input.value = target.innerText
+
+				target.innerText = " "
+				target.appendChild(input)
+			}
+		})
 	}
 
   render() {
