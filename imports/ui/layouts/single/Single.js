@@ -4,106 +4,111 @@ import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Books } from '/imports/api/books/books';
 
+let data;
+
 class Single extends Component {
 	constructor() {
 		super();
+		this.state = {}
 	}
 
-  componentDidMount () {
-    // Detects clicks everywhere on the screen
-    document.addEventListener('dblclick', this.handleClick)
-    document.querySelector('.uuu').addEventListener('click', (event) => {
-			if (event.target.nodeName == 'BUTTON') {
-				this.appendForm()
-			}
+	componentWillMount() {
+		const livre = this.props.livre
+	  this.setState({
+			_id: livre._id,
+			img_src: livre.image,
+			author: livre.author,
+			bookName: livre.bookname,
+			date : livre.date,
+			category: livre.category,
+			description: livre.description,
+			updateClicked: false
 		})
-  }
-
-  componentWillUnmount () {
-    document.removeEventListener('dblclick', this.handleClick)
-    // document.addEventListener('click', this.handleClick)
-  }
-
-	appendForm() {
-    const form = document.createElement('FORM');
-		const bookName = document.createElement("input")
-		var author = document.createElement("INPUT");
-		const description = document.createElement("TEXTAREA")
-		var btnUpdate = document.createElement("BUTTON");    
-		var btnCancel = document.createElement("BUTTON");    
-		var tUpdate = document.createTextNode("update");
-		var tCancel = document.createTextNode("cancel");
-
-    var array = ["Science-Fiction", "Drame", "Mystè", "Dystopie"];
-
-		bookName.setAttribute("type", "text");
-		author.setAttribute("type", "text");
-
-		bookName.value = this.props.livre.bookname
-		author.value = this.props.livre.author
-		description.value = this.props.livre.description
-
-    var selectList = document.createElement("select");
-
-		btnUpdate.appendChild(tUpdate);    
-		btnCancel.appendChild(tCancel);    
-
-    form.appendChild(bookName);
-    form.appendChild(selectList);
-    form.appendChild(author);
-    form.appendChild(description);
-    form.appendChild(btnUpdate);
-    form.appendChild(btnCancel);
-
-    //Create and append the options
-    for (var i = 0; i < array.length; i++) {
-      var option = document.createElement("option");
-      option.value = array[i];
-      option.text = array[i];
-      selectList.appendChild(option);
-    }
-		document.querySelector('.single__desc').style.display = 'none';
-		document.querySelector('.update').appendChild(form);
 	}
 
-	handleClick(e) {
-		const target = e.target
-		const input = document.createElement("TEXTAREA")
-		const form = document.createElement('FORM');
+	toggleForm() {
+		var content = document.querySelector('.single__desc')
+		var formContainer = document.querySelector('.update')
+		formContainer.style.display = formContainer.style.display == 'flex' ? 
+			'none' : 'flex'
+		content.style.display = content.style.display == 'none' ? 
+			'block' : 'none'
+		if(formContainer.style.display == 'flex') {
+			return this.setState({
+				updateClicked : true
+   		})
+		}
+		this.setState({
+			updateClicked : false
+  	})
+	}
 
-		form.appendChild(input)
-		const allowedType = ["P","SPAN"]
-		allowedType.map((el) => {
-			if(el == target.nodeName && !target.changed ) {
-				target.changed = true;
-				input.value = target.innerText
+	submit(event) {
+	  Meteor.subscribe('updateBook', this.state );
+		this.toggleForm();
+		event.preventDefault();
+	}
 
-				target.innerText = " "
-				// target.appendChild(input)
-				target.parentNode.appendChild(form)
-				// target.appendChild(form)
-			}
-		})
+	formChange(event) {
+		const name = event.target.getAttribute('name')
+		switch (name) {
+			case 'bookName':
+				this.setState({ bookName: event.target.value});
+				break;
+			case 'category':
+				this.setState({ category: event.target.value});
+				break;
+			case 'author':
+				this.setState({ author: event.target.value});
+				break;
+			case 'description':
+				this.setState({ description: event.target.value});
+				break;
+	
+			default:
+				console.log('default')
+				break;
+		}
 	}
 
   render() {
   	return (
 	    <div className="single">
 	    	<div className="imageContainer">
-	    		<img src={this.props.livre.image}/>
+	    		<img src={this.state.img_src}/>
 	    	</div>
 	        <div className="single__desc">
 	        	<div>
-		        	<span className="entry__cat">{this.props.livre.category}</span>
-		        	<span>{this.props.livre.date}</span>
+		        	<span className="entry__cat">{this.state.category}</span>
+		        	<span>{this.state.date}</span>
 	        	</div>
-	        	<p>{this.props.livre.bookname}</p>
-	        	<p>{this.props.livre.author}</p>
-	        	<p>{this.props.livre.description}</p>
-						<button className='uuu'>update cuntent</button>
+	        	<p>{this.state.bookName}</p>
+	        	<p>{this.state.author}</p>
+	        	<p>{this.state.description}</p>
+						<button onClick={this.toggleForm.bind(this)} className='showForm'>update cuntent</button>
 	        </div>
-					<div className="update"></div>
-	    </div>
+					<div className="update">
+					{ 
+						this.state.updateClicked ?
+						<form onSubmit={this.submit.bind(this)}>
+							<input type="text" name='bookName' value={ this.state.bookName} onChange={ this.formChange.bind(this) } />
+								<select name='category' onChange={ this.formChange.bind(this) }>
+									<option value="Science-Fiction">Science-Fiction</option>
+									<option value="Drame">Drame</option>
+									<option value="Mystè">Mystè</option>
+									<option value="Dystopie">Dystopie</option>
+								</select>
+							<input type="text" name='author' value={ this.state.author} onChange={ this.formChange.bind(this) } />
+							<textarea name='description' value={this.state.description} onChange={ this.formChange.bind(this) }  >
+							</textarea>
+							<div>
+								<input type='submit' value='update'/> <button onClick={this.toggleForm.bind(this)}>cancel</button>
+							</div>
+						</form> :
+						" "
+					}
+					</div>
+			</div>
 	);
   }
 }
