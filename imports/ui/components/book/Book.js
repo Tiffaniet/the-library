@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
  
 // Task component - represents a single todo item
-export default class Task extends Component {
+export default class Book extends Component {
   render() {
     return (
       <li className="entry__link">
@@ -12,6 +12,7 @@ export default class Task extends Component {
             <p className="entry__name">{this.props.book.bookname}</p>
             <p className="entry__author">{this.props.book.author}</p>
             <p className="entry__cat">{this.props.book.category}</p>
+            <button name="delete">X</button>
           </div>  
         </Link>
       </li>

@@ -22,11 +22,27 @@ class Single extends Component {
 			date : livre.date,
 			category: livre.category,
 			description: livre.description,
-			updateClicked: false
+			updateClicked: false,
+			oldState: livre,
 		})
 	}
 
-	toggleForm() {
+	toggleForm(event) {
+		event.preventDefault();
+		if(event.target.getAttribute('class') == null) {
+			let newState = this.state
+	  	this.setState({
+				oldState : {
+					_id: newState._id,
+					img_src: newState.image,
+					author: newState.author,
+					bookName: newState.bookname,
+					date : newState.date,
+					category: newState.category,
+					description: newState.description,
+				}
+			})
+		}
 		var content = document.querySelector('.single__desc')
 		var formContainer = document.querySelector('.update')
 		formContainer.style.display = formContainer.style.display == 'flex' ? 
@@ -35,18 +51,20 @@ class Single extends Component {
 			'block' : 'none'
 		if(formContainer.style.display == 'flex') {
 			return this.setState({
-				updateClicked : true
+				updateClicked : true,
+				button : event.target.getAttribute('class')
    		})
 		}
 		this.setState({
-			updateClicked : false
+			updateClicked : false,
+			button : event.target.getAttribute('class')
   	})
 	}
 
 	submit(event) {
-	  Meteor.subscribe('updateBook', this.state );
-		this.toggleForm();
 		event.preventDefault();
+	  Meteor.subscribe('updateBook', this.state );
+		this.toggleForm(event);
 	}
 
 	formChange(event) {
@@ -75,17 +93,17 @@ class Single extends Component {
   	return (
 	    <div className="single">
 	    	<div className="imageContainer">
-	    		<img src={this.state.img_src}/>
+	    		<img src={this.state.oldState.img_src}/>
 	    	</div>
 	        <div className="single__desc">
 	        	<div>
-		        	<span className="entry__cat">{this.state.category}</span>
-		        	<span>{this.state.date}</span>
+		        	<span className="entry__cat">{this.state.oldState.category}</span>
+		        	<span>{this.state.oldState.date}</span>
 	        	</div>
-	        	<p>{this.state.bookName}</p>
-	        	<p>{this.state.author}</p>
-	        	<p>{this.state.description}</p>
-						<button onClick={this.toggleForm.bind(this)} className='showForm'>update cuntent</button>
+	        	<p>{this.state.oldState.bookName}</p>
+	        	<p>{this.state.oldState.author}</p>
+	        	<p>{this.state.oldState.description}</p>
+						<button onClick={this.toggleForm.bind(this)} className='showForm'>update content</button>
 	        </div>
 					<div className="update">
 					{ 
@@ -102,7 +120,7 @@ class Single extends Component {
 							<textarea name='description' value={this.state.description} onChange={ this.formChange.bind(this) }  >
 							</textarea>
 							<div>
-								<input type='submit' value='update'/> <button onClick={this.toggleForm.bind(this)}>cancel</button>
+								<input type='submit' value='update'/> <button className='cancel' onClick={this.toggleForm.bind(this)}>cancel</button>
 							</div>
 						</form> :
 						" "

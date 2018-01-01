@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
-import Task from '../../components/task/Task.js';
+import Book from '../../components/book/Book.js';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Books } from '/imports/api/books/books';
 
@@ -14,7 +14,7 @@ class App extends Component {
 
   renderTasks() {
     return this.props.books.map((book) => (
-      <Task key={book._id} book={book} />
+      <Book key={book._id} book={book} />
     ));
   }
  
