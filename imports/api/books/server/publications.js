@@ -19,3 +19,9 @@ Meteor.publish('updateBook', function( val ){
     }
   })
 })
+
+Meteor.publish('deleteBook', function( id ) {
+  event.preventDefault();
+  const books = Books.findOne(bookId);
+  Books.remove(bookId);
+});

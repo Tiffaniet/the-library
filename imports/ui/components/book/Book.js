@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
  
 // Task component - represents a single todo item
 export default class Book extends Component {
+
   render() {
     return (
       <li className="entry__link">
@@ -12,7 +13,7 @@ export default class Book extends Component {
             <p className="entry__name">{this.props.book.bookname}</p>
             <p className="entry__author">{this.props.book.author}</p>
             <p className="entry__cat">{this.props.book.category}</p>
-            <button name="delete">X</button>
+            <button className="delete" onClick={_ => this.deleteCat(this.props.book._id) }>X</button>
           </div>  
         </Link>
       </li>
