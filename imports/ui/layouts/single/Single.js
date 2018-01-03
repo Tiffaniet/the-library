@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Books } from '/imports/api/books/books';
+import Form from '../../components/form/Form.js';
 
 let data;
 
@@ -16,7 +17,7 @@ class Single extends Component {
 		const livre = this.props.livre
 	  this.setState({
 			_id: livre._id,
-			img_src: livre.image,
+			image : livre.image,
 			author: livre.author,
 			bookName: livre.bookname,
 			date : livre.date,
@@ -27,6 +28,9 @@ class Single extends Component {
 		})
 	}
 
+	componentDidMount() {
+	}
+
 	toggleForm(event) {
 		event.preventDefault();
 		if(event.target.getAttribute('class') == null) {
@@ -34,9 +38,9 @@ class Single extends Component {
 	  	this.setState({
 				oldState : {
 					_id: newState._id,
-					img_src: newState.image,
+					image: newState.image,
 					author: newState.author,
-					bookName: newState.bookname,
+					bookname: newState.bookName,
 					date : newState.date,
 					category: newState.category,
 					description: newState.description,
@@ -93,14 +97,14 @@ class Single extends Component {
   	return (
 	    <div className="single">
 	    	<div className="imageContainer">
-	    		<img src={this.state.oldState.img_src}/>
+	    		<img src={this.state.oldState.image}/>
 	    	</div>
 	        <div className="single__desc">
 	        	<div>
 		        	<span className="entry__cat">{this.state.oldState.category}</span>
 		        	<span>{this.state.oldState.date}</span>
 	        	</div>
-	        	<p>{this.state.oldState.bookName}</p>
+	        	<p>{this.state.oldState.bookname}</p>
 	        	<p>{this.state.oldState.author}</p>
 	        	<p>{this.state.oldState.description}</p>
 						<button onClick={this.toggleForm.bind(this)} className='showForm'>update content</button>
@@ -108,21 +112,8 @@ class Single extends Component {
 					<div className="update">
 					{ 
 						this.state.updateClicked ?
-						<form onSubmit={this.submit.bind(this)}>
-							<input type="text" name='bookName' value={ this.state.bookName} onChange={ this.formChange.bind(this) } />
-								<select name='category' onChange={ this.formChange.bind(this) }>
-									<option value="Science-Fiction">Science-Fiction</option>
-									<option value="Drame">Drame</option>
-									<option value="Mystè">Mystè</option>
-									<option value="Dystopie">Dystopie</option>
-								</select>
-							<input type="text" name='author' value={ this.state.author} onChange={ this.formChange.bind(this) } />
-							<textarea name='description' value={this.state.description} onChange={ this.formChange.bind(this) }  >
-							</textarea>
-							<div>
-								<input type='submit' value='update'/> <button className='cancel' onClick={this.toggleForm.bind(this)}>cancel</button>
-							</div>
-						</form> :
+      			<Form  value={this.state} toggle={this.toggleForm.bind(this)} change={this.formChange.bind(this)} submit={this.submit.bind(this)} />
+						:
 						" "
 					}
 					</div>
